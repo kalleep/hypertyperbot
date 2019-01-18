@@ -48,7 +48,7 @@ func (g *Game) Start(name string, beatHighscoreWith int) {
 					for range word {
 						g.increaseMultiplier += 1
 
-						if g.increaseMultiplier == 10 {
+						if g.increaseMultiplier == 10 && g.multiplier < 10 {
 							g.multiplier += 1
 							g.increaseMultiplier = 0
 						}
@@ -73,7 +73,8 @@ func (g *Game) Start(name string, beatHighscoreWith int) {
 
 			newHighscore := g.client.GetHighscore()
 
-			fmt.Printf("new highscore: %d \n", newHighscore.Name)
+			fmt.Printf("new highscore: %d \n", newHighscore.Score)
+			fmt.Printf("held by: %s \n", newHighscore.Name)
 		}
 
 		time.Sleep(time.Duration(10) * time.Minute)
