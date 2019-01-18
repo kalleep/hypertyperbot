@@ -20,11 +20,12 @@ func NewGame() *Game {
 	return &Game{
 		client:     client.NewClient(),
 		multiplier: 1,
-		name:       "hypertyperbot",
 	}
 }
 
-func (g *Game) Start() {
+func (g *Game) Start(name string, beatHighscoreWith int) {
+
+	g.name = name
 
 	g.id = g.client.GetGameId()
 
@@ -34,7 +35,7 @@ func (g *Game) Start() {
 
 	g.level = 0
 
-	for g.score < highscore+5000 {
+	for g.score < highscore+beatHighscoreWith {
 
 		words := g.client.GetWords(g.id, g.level)
 
@@ -55,8 +56,6 @@ func (g *Game) Start() {
 			g.score += length * g.multiplier
 
 			g.client.SolveWord(g.id, word, g.level, g.multiplier)
-
-			//time.Sleep(time.Duration(2) * time.Second)
 
 		}
 
