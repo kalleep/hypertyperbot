@@ -164,7 +164,7 @@ type highscore struct {
 	Score int    `json:"score"`
 }
 
-func (c *Client) GetHighscore() int {
+func (c *Client) GetHighscore() highscore {
 
 	url := c.baseUrl + "/highscore"
 
@@ -178,7 +178,7 @@ func (c *Client) GetHighscore() int {
 
 	decoder.Decode(&h)
 
-	return h.Score[0].Score
+	return h.Score[0]
 
 }
 

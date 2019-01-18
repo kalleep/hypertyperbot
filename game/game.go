@@ -2,6 +2,7 @@ package game
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/kalleep/hypertyperbot/client"
 )
@@ -27,48 +28,55 @@ func (g *Game) Start(name string, beatHighscoreWith int) {
 
 	g.name = name
 
-	g.id = g.client.GetGameId()
+	for {
+		highscore := g.client.GetHighscore()
 
-	highscore := g.client.GetHighscore()
+		fmt.Printf("current highscore: %d \n", highscore.Score)
+		fmt.Printf("held by: %s", highscore.Name)
 
-	fmt.Printf("current highscore: %d \n", highscore)
+		if highscore.Name != g.name {
+			g.id = g.client.GetGameId()
 
-	g.level = 0
+			g.level = 0
 
-	for g.score < highscore+beatHighscoreWith {
+			for g.score < highscore.Score+beatHighscoreWith {
 
-		words := g.client.GetWords(g.id, g.level)
+				words := g.client.GetWords(g.id, g.level)
 
-		for _, word := range words {
+				for _, word := range words {
 
-			for range word {
-				g.increaseMultiplier += 1
+					for range word {
+						g.increaseMultiplier += 1
 
-				if g.increaseMultiplier == 10 {
-					g.multiplier += 1
-					g.increaseMultiplier = 0
+						if g.increaseMultiplier == 10 {
+							g.multiplier += 1
+							g.increaseMultiplier = 0
+						}
+
+					}
+
+					length := len(word)
+
+					g.score += length * g.multiplier
+
+					g.client.SolveWord(g.id, word, g.level, g.multiplier)
+
 				}
+
+				g.level += 1
 
 			}
 
-			length := len(word)
+			g.client.Gameover(g.id)
 
-			g.score += length * g.multiplier
+			g.client.RegisterScore(g.id, g.name, g.score)
 
-			g.client.SolveWord(g.id, word, g.level, g.multiplier)
+			newHighscore := g.client.GetHighscore()
 
+			fmt.Printf("new highscore: %d \n", newHighscore.Name)
 		}
 
-		g.level += 1
-
+		time.Sleep(time.Duration(10) * time.Minute)
 	}
-
-	g.client.Gameover(g.id)
-
-	g.client.RegisterScore(g.id, g.name, g.score)
-
-	newHighscore := g.client.GetHighscore()
-
-	fmt.Printf("new highscore: %d \n", newHighscore)
 
 }
