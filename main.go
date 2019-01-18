@@ -11,6 +11,8 @@ func main() {
 	name := flag.String("name", "hypertyperbot", "name to register score on")
 	beatHighscoreWith := flag.Int("score", 1000, "number to beat the highscore with")
 
+	flag.Parse()
+
 	g := game.NewGame()
 
 	g.Start(*name, *beatHighscoreWith)
