@@ -20,7 +20,7 @@ func NewGame() *Game {
 	return &Game{
 		client:     client.NewClient(),
 		multiplier: 1,
-		name:       "githyperbot",
+		name:       "hypertyperbot",
 	}
 }
 

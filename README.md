@@ -1,0 +1,1 @@
+Bot for word game https://www.hypertyper.io/
