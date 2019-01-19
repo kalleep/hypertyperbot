@@ -1,7 +1,7 @@
 package game
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/kalleep/hypertyperbot/client"
@@ -31,8 +31,8 @@ func (g *Game) Start(name string, beatHighscoreWith int) {
 	for {
 		highscore := g.client.GetHighscore()
 
-		fmt.Printf("current highscore: %d \n", highscore.Score)
-		fmt.Printf("held by: %s", highscore.Name)
+		log.Printf("current highscore: %d \n", highscore.Score)
+		log.Printf("held by: %s", highscore.Name)
 
 		if highscore.Name != g.name {
 			g.id = g.client.GetGameId()
@@ -73,8 +73,8 @@ func (g *Game) Start(name string, beatHighscoreWith int) {
 
 			newHighscore := g.client.GetHighscore()
 
-			fmt.Printf("new highscore: %d \n", newHighscore.Score)
-			fmt.Printf("held by: %s \n", newHighscore.Name)
+			log.Printf("new highscore: %d \n", newHighscore.Score)
+			log.Printf("held by: %s \n", newHighscore.Name)
 		}
 
 		time.Sleep(time.Duration(10) * time.Minute)
