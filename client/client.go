@@ -103,12 +103,6 @@ func (c *Client) Gameover(id string) {
 
 	url := c.baseUrl + "/game/" + id + "/gameover"
 
-	request, err := http.NewRequest("OPTIONS", url, strings.NewReader(""))
-
-	util.PanicIfErr(err)
-
-	c.httpClient.Do(request)
-
 	request, err = http.NewRequest("PUT", url, strings.NewReader(""))
 
 	util.PanicIfErr(err)
