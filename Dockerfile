@@ -13,6 +13,4 @@ COPY . .
 
 RUN CGO_ENABLED=0 go build -o hypertyperbot
 
-RUN ls -lah
-
 ENTRYPOINT ["/app/hypertyperbot"]

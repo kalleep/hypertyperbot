@@ -103,7 +103,7 @@ func (c *Client) Gameover(id string) {
 
 	url := c.baseUrl + "/game/" + id + "/gameover"
 
-	request, err = http.NewRequest("PUT", url, strings.NewReader(""))
+	request, err := http.NewRequest("PUT", url, strings.NewReader(""))
 
 	util.PanicIfErr(err)
 
@@ -160,7 +160,7 @@ type highscore struct {
 
 func (c *Client) GetHighscore() highscore {
 
-	url := c.baseUrl + "/highscore"
+	url := c.baseUrl + "/highscore/today"
 
 	response, err := c.httpClient.Get(url)
 
